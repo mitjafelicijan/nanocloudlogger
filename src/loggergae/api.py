@@ -7,7 +7,6 @@ from google.appengine.ext import db
 
 class Feed(db.Model):
 	secret = db.StringProperty()
-	author = db.UserProperty()
 	content = db.StringProperty(multiline=True)
 	date = db.DateTimeProperty(auto_now_add=True)
 	
@@ -17,10 +16,13 @@ class MainPage(webapp2.RequestHandler):
 
 class Stream(webapp2.RequestHandler):
 	def get(self):
-		self.response.out.write('stream api')
+		self.response.out.write('stream get')
+	def post(self):
+		self.response.out.write('stream post')
 
 app = webapp2.WSGIApplication([
 	('/api', MainPage),
-	('/api/stream', Stream),
+	('/api/get', Stream),
+	('/api/set', Stream),
 	('/', MainPage)
 ], debug=True)
