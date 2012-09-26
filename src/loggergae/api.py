@@ -11,16 +11,16 @@ class Feed(db.Model):
 	
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		self.response.out.write('main page')
-
-
+		self.response.headers['Content-Type'] = 'text/html'
+		self.response.out.write('<h3>Nano Cloud Logger</h3>')
 
 class StreamGet(webapp2.RequestHandler):
 	def get(self):
-		response = []
-		
-		if self.request.get('limit') <> '': limit = 'limit ' + self.request.get('limit')
-		else: limit = ''
+		response = []		
+		if self.request.get('limit') <> '':
+			limit = 'limit ' + self.request.get('limit')
+		else:
+			limit = ''
 		
 		feed = db.GqlQuery('select * from Feed where stream=:1 order by datetime desc ' + limit, self.request.get('stream'))
 		
@@ -68,6 +68,7 @@ class StreamSet(webapp2.RequestHandler):
 				feed.data = self.request.get(input)
 				feed.input = str(input)
 				feed.put()
+		
 		if self.request.get('format') == 'csv':
 			self.response.headers['Content-Type'] = 'plain/text'
 			self.response.out.write('status: ok')
