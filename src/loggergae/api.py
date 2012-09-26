@@ -27,18 +27,20 @@ class StreamGet(webapp2.RequestHandler):
 		if self.request.get('lastid') <> '':
 			for entry in feed:
 				if int(self.request.get('lastid')) < entry.key().id():
-					response.append({'id': entry.key().id(),
-														'input': str(entry.input),
-														'data': str(entry.data),
-														'datetime': str(entry.datetime)
-													})
+					response.append({
+						'id': entry.key().id(),
+						'input': str(entry.input),
+						'data': str(entry.data),
+						'datetime': str(entry.datetime)
+					})
 		else:
 			for entry in feed:
-				response.append({'id': entry.key().id(),
-													'input': str(entry.input),
-													'data': str(entry.data),
-													'datetime': str(entry.datetime)
-												})
+				response.append({
+					'id': entry.key().id(),
+					'input': str(entry.input),
+					'data': str(entry.data),
+					'datetime': str(entry.datetime)
+				})
 		
 		if self.request.get('format') == 'csv':
 			self.response.headers['Content-Type'] = 'plain/text'
