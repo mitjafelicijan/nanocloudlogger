@@ -18,6 +18,12 @@ Server side code is written in Python on top of Google App Engine. Tested and de
 
 In example below I will demonstrate how to use this tool on a project where I have two sensors I call inputs (temperature, photocell) hooked up on a Arduino. Lets assume I am running Google App Engine locally (http://localhost:8080/)
 
+Application is located in src/loggergae.
+
+		python /path-to-your-gae-dir/dev_appserver.py /path-to-nano-logger-dir/src/loggergae
+		
+		If you are using Windows or Mac please check Google App Engine website on information how to run apps.
+
 Initializing stream
 -----------------
 
@@ -55,8 +61,8 @@ Examples of usage:
 Examples of response:
 
 		JSON
-		[{ "input": "temperature",   "data": "28",   "id": 6,   "datetime": "2012-09-27 00:54:00.441780" }, 
-		{"input": "photocell",   "data": "897",   "id": 5,   "datetime": "2012-09-27 00:54:00.439565" }]
+		[{ "input": "temperature", "data": "28", "id": 6, "datetime": "2012-09-27 00:54:00.441780" }, 
+		{"input": "photocell", "data": "897", "id": 5, "datetime": "2012-09-27 00:54:00.439565" }]
 		
 		CSV
 		6,2012-09-27 00:54:00.441780,temperature,28
