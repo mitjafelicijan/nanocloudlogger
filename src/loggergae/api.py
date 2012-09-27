@@ -17,10 +17,10 @@ class MainPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'index.html')
 		self.response.out.write(template.render(path, {}))
 
-class DebuggerPage(webapp2.RequestHandler):
+class ConsolePage(webapp2.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
-		path = os.path.join(os.path.dirname(__file__), 'debugger.html')
+		path = os.path.join(os.path.dirname(__file__), 'console.html')
 		self.response.out.write(template.render(path, {}))
 
 class DocumentationPage(webapp2.RequestHandler):
@@ -89,13 +89,13 @@ class StreamSet(webapp2.RequestHandler):
 			self.response.out.write('status: ok')
 		else:
 			self.response.headers['Content-Type'] = 'application/json'
-			self.response.out.write(json.dumps({'status' : 'ok'}, separators=(',',':')))
+			self.response.out.write(json.dumps({'status' : 'ok'}, separators=(',', ':')))
 
 app = webapp2.WSGIApplication([
 	('/api', DocumentationPage),
 	('/api/get', StreamGet),
 	('/api/set', StreamSet),
 	('/docs', DocumentationPage),
-	('/debug', DebuggerPage),
+	('/console', ConsolePage),
 	('/', DocumentationPage)
 ], debug=True)
