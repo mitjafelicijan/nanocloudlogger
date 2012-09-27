@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		
+		<title>Documentation - Nano Cloud Logger</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<style>
+			
+			body {
+				font: 13px Helvetica, arial, freesans, clean, sans-serif;
+				line-height: 1.4;
+				color: #333;
+				max-width: 700px;
+			}
+			pre, code, tt {
+				font-size: 12px;
+				font-family: Consolas, "Liberation Mono", Courier, monospace;
+				display: block;
+				border: 1px solid #d8d8d8;
+				background: #fafafa;
+				white-space: pre-line;
+				padding: 20px;
+			}
+			h3 {
+				margin-top: 40px;
+				
+			}
+			table {
+				width: 100%;
+				border: 1px solid #d8d8d8;
+			}
+			table tr {
+				vertical-align: top;
+			}
+			table td {
+				padding: 10px 20px;
+				
+			}
+			table td:first-child {
+				background: #f2f4f5;
+				border-right: 1px solid #d8d8d8;
+				width: 100px;
+				font-weight: bold;
+			}
+			a {
+				color: #D9400E;
+			}
+			a:hover {
+				color: #912B09;
+			}
+		</style>
+		
+	</head>
+	
+	<body>
+		
+		<h2>Nano Cloud Logger - Documentation</h2>
+		
+		Author: Mitja Felicijan &lt;<a href="mailto:mitja.felicijan@gmail.com">mitja.felicijan@gmail.com</a>&gt;
+		<br>Project home: <a href="https://github.com/mitjafelicijan/NanoCloudLogger">https://github.com/mitjafelicijan/NanoCloudLogger</a>
+		
+		<hr>
+		
+		<h3>General information</h3>
+		
+		<p>Nano logger provides user to easily store data in a cloud based environment 
+			without having to write any code on server side. Idea behind this is that 
+			every user can store his data (POST method) in his own stream (usually 
+			different stream id for each application) and then access data via basic 
+			GET method.</p>
+
+		<p>The reason behind this project is I needed simple solution for prototyping 
+			and I didn't want to write web services every time when I needed to store 
+			data remotely.</p>
+
+		<p>This tool is for prototyping use only. It was not intended to be used commercially.</p>
+
+		<p>Each stream has its own id and can store x number of inputs. Inputs in this 
+			case can be sensor data (examples below). This is especially useful for 
+			Arduino developers or any kind of telemetry projects.</p>
+		
+		<p>Server side code is written in Python on top of Google App Engine. Tested 
+			and developed on Google App engine v1.7.2.</p>
+		
+		<p>In example below I will demonstrate how to use this tool on a project 
+			where I have two sensors I call inputs (temperature, photocell) hooked up on a Arduino.
+			Lets assume I am running Google App Engine locally (http://localhost:8080/)</p>
+		
+		<h3>Initializing stream</h3>
+		
+		<p>All you need to do to initialize stream is to give it an ID. Stream ID is 
+			alphanumerical string. Streams are read/write and are public. No authentication 
+			is needed for accessing and modifying stream. You can add inputs as you go.</p>
+		
+		<pre>
+			<b>Stream example names:</b>
+				
+			application1
+			my_sensor_stream
+			home_automation
+		</pre>
+		
+		<h3>Reading stream data</h3>
+		
+		<table>
+			<tr>
+				<td>Example:</td>
+				<td>http://localhost:8080/api/get?stream=my_sensor_stream</td>
+			</tr>
+			<tr>
+				<td>API url:</td>
+				<td>/api/get</td>
+			</tr>
+			<tr>
+				<td>Formats:</td>
+				<td>json, csv</td>
+			</tr>
+			<tr>
+				<td>Method:</td>
+				<td>GET</td>
+			</tr>
+			<tr>
+				<td>Returns:</td>
+				<td>array of values</td>
+			</tr>
+		</table>
+		
+		<br>
+		
+		<table>
+			<tr>
+				<td>stream</td>
+				<td>Stream identifier.</td>
+			</tr>
+			<tr>
+				<td>lastid</td>
+				<td>Only outputs records with biggers id than lastid. Useful when fetching realtime data from service and you only need latest results.</td>
+			</tr>
+			<tr>
+				<td>format</td>
+				<td>Defines type of response output.</td>
+			</tr>
+			<tr>
+				<td>limit</td>
+				<td>Limits number of output records.</td>
+			</tr>
+		</table>
+		
+		<pre>
+			<b>Examples of usage:</b>
+			
+			http://localhost:8080/api/get?stream=my_sensor_stream
+			http://localhost:8080/api/get?stream=my_sensor_stream&format=json
+			http://localhost:8080/api/get?stream=my_sensor_stream&lastid=50&limit=5&format=csv
+		</pre>
+		
+		<pre>
+			<b>Examples of response:</b>
+				
+				<b>JSON</b>
+
+				[{
+						&nbsp;&nbsp;"input": "temperature",
+						&nbsp;&nbsp;"data": "28",
+						&nbsp;&nbsp;"id": 6,
+						&nbsp;&nbsp;"datetime": "2012-09-27 00:54:00.441780"
+				},
+				{
+						&nbsp;&nbsp;"input": "photocell",
+						&nbsp;&nbsp;"data": "897",
+						&nbsp;&nbsp;"id": 5,
+						&nbsp;&nbsp;"datetime": "2012-09-27 00:54:00.439565"
+				}]
+
+				<b>CSV</b>
+
+				6,2012-09-27 00:54:00.441780,temperature,28
+				5,2012-09-27 00:54:00.439565,photocell,897
+		</pre>
+		
+		<h3>Adding to data stream</h3>
+		
+		<table>
+			<tr>
+				<td>Example:</td>
+				<td>http://localhost:8080/api/set?stream=my_sensor_stream</td>
+			</tr>
+			<tr>
+				<td>API url:</td>
+				<td>/api/set</td>
+			</tr>
+			<tr>
+				<td>Method:</td>
+				<td>POST</td>
+			</tr>
+			<tr>
+				<td>Returns:</td>
+				<td>status</td>
+			</tr>
+		</table>
+		
+		
+		
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<textarea rows="10" cols="80"></textarea>
+		
+	</body>
+	
+</html>

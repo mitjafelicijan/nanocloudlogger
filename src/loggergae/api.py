@@ -1,7 +1,9 @@
 
+import os
 import webapp2
 import simplejson as json
 from google.appengine.ext import db
+from google.appengine.ext.webapp import template
 
 class Feed(db.Model):
 	stream = db.StringProperty()
@@ -12,7 +14,14 @@ class Feed(db.Model):
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
-		self.response.out.write('<h3>Nano Cloud Logger</h3>')
+		path = os.path.join(os.path.dirname(__file__), 'index.html')
+		self.response.out.write(template.render(path, {}))
+
+class DocumentationPage(webapp2.RequestHandler):
+	def get(self):
+		self.response.headers['Content-Type'] = 'text/html'
+		path = os.path.join(os.path.dirname(__file__), 'documentation.html')
+		self.response.out.write(template.render(path, {}))
 
 class StreamGet(webapp2.RequestHandler):
 	def get(self):
@@ -77,8 +86,9 @@ class StreamSet(webapp2.RequestHandler):
 			self.response.out.write(json.dumps({'status' : 'ok'}, separators=(',',':')))
 
 app = webapp2.WSGIApplication([
-	('/api', MainPage),
+	('/api', DocumentationPage),
 	('/api/get', StreamGet),
 	('/api/set', StreamSet),
-	('/', MainPage)
+	('/docs', DocumentationPage),
+	('/', DocumentationPage)
 ], debug=True)
