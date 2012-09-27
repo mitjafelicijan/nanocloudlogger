@@ -16,7 +16,7 @@ Each stream has its own id and can store x number of inputs. Inputs in this case
 
 Server side code is written in Python on top of Google App Engine. Tested and developed on Google App engine v1.7.2.
 
-In example below I will demonstrate how to use this tool on a project where I have two sensors I call inputs (temperature, photocell) hooked up on a Arduino. Lets assume I am running Google App Engine locally (http://localhost:8080/)
+In example below I will demonstrate how to use this tool on a project where I have two sensors I call inputs (temperature, photocell) hooked up on a Arduino. Lets assume I am running Google App Engine locally (http://localhost:8080/). <b>Alert: If you will run this service locally all database records will be lost if you will restart service.</b>
 
 Application is located in src/loggergae.
 
