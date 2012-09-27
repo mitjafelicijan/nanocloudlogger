@@ -24,6 +24,8 @@ Application is located in src/loggergae.
 		
 		If you are using Windows or Mac please check Google App Engine website on information how to run apps.
 
+If you point your browser to (eg http://localhost:8080) after you run application help is displayed.
+
 Initializing stream
 -----------------
 
