@@ -70,7 +70,7 @@ Examples of response:
 		6,2012-09-27 00:54:00.441780,temperature,28
 		5,2012-09-27 00:54:00.439565,photocell,897 
 
-Adding tool data stream
+Adding to data stream
 --------------------
 
 		Examples:	http://localhost:8080/api/set?stream=my_sensor_stream
