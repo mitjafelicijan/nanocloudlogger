@@ -19,6 +19,7 @@ Server side code is written in Python on top of Google App Engine. Tested and de
 In example below I will demonstrate how to use this tool on a project where I have two sensors I call inputs (temperature, photocell) hooked up on a Arduino. Lets assume I am running Google App Engine locally (http://localhost:8080/)
 
 Initializing stream
+-----------------
 
 All you need to do to initialize stream is to give it an ID. Stream ID is alphanumerical string. Streams are read/write and are public. No authentication is needed for accessing and modifying stream. You can add inputs as you go.
 
@@ -27,3 +28,33 @@ All you need to do to initialize stream is to give it an ID. Stream ID is alphan
 		application1
 		my_sensor_stream
 		home_automation
+
+
+Reading stream data
+-----------------
+
+		Example:	http://localhost:8080/api/get?stream=my_sensor_stream
+		API url:	/api/get
+		Formats:	json, csv
+		Method:		GET
+		Returns:	array of values
+
+Parameters
+
+		stream	Stream identifier.
+		lastid	Only outputs records with biggers id than lastid. Useful when fetching realtime data from service and you only need latest results.
+		format	Defines type of response output.
+		limit	Limits number of output records.
+
+Examples of usage:  http://localhost:8080/api/get?stream=my_sensor_stream http://localhost:8080/api/get?stream=my_sensor_stream&format=json http://localhost:8080/api/get?stream=my_sensor_stream&lastid=50&limit=5&format=csv 
+
+Examples of response:  JSON  [{   "input": "temperature",   "data": "28",   "id": 6,   "datetime": "2012-09-27 00:54:00.441780" }, {   "input": "photocell",   "data": "897",   "id": 5,   "datetime": "2012-09-27 00:54:00.439565" }]  CSV  6,2012-09-27 00:54:00.441780,temperature,28 5,2012-09-27 00:54:00.439565,photocell,897 
+
+Adding tool data stream
+--------------------
+
+		Examples:	http://localhost:8080/api/set?stream=my_sensor_stream
+		API url:	/api/set
+		Method:	POST
+		Returns:	status
+Examples of usage:  http://localhost:8080/api/set?stream=my_sensor_stream  POST varibles with this request:  key            value -------------------------------- temperature    28 photocell      755 ...
