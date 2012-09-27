@@ -17,6 +17,12 @@ class MainPage(webapp2.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'index.html')
 		self.response.out.write(template.render(path, {}))
 
+class DebuggerPage(webapp2.RequestHandler):
+	def get(self):
+		self.response.headers['Content-Type'] = 'text/html'
+		path = os.path.join(os.path.dirname(__file__), 'debugger.html')
+		self.response.out.write(template.render(path, {}))
+
 class DocumentationPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
@@ -90,5 +96,6 @@ app = webapp2.WSGIApplication([
 	('/api/get', StreamGet),
 	('/api/set', StreamSet),
 	('/docs', DocumentationPage),
+	('/debug', DebuggerPage),
 	('/', DocumentationPage)
 ], debug=True)
