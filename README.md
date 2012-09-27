@@ -46,15 +46,39 @@ Parameters
 		format	Defines type of response output.
 		limit	Limits number of output records.
 
-Examples of usage:  http://localhost:8080/api/get?stream=my_sensor_stream http://localhost:8080/api/get?stream=my_sensor_stream&format=json http://localhost:8080/api/get?stream=my_sensor_stream&lastid=50&limit=5&format=csv 
+Examples of usage:
 
-Examples of response:  JSON  [{   "input": "temperature",   "data": "28",   "id": 6,   "datetime": "2012-09-27 00:54:00.441780" }, {   "input": "photocell",   "data": "897",   "id": 5,   "datetime": "2012-09-27 00:54:00.439565" }]  CSV  6,2012-09-27 00:54:00.441780,temperature,28 5,2012-09-27 00:54:00.439565,photocell,897 
+		http://localhost:8080/api/get?stream=my_sensor_stream
+		http://localhost:8080/api/get?stream=my_sensor_stream&format=json
+		http://localhost:8080/api/get?stream=my_sensor_stream&lastid=50&limit=5&format=csv 
+
+Examples of response:
+
+		JSON
+		[{ "input": "temperature",   "data": "28",   "id": 6,   "datetime": "2012-09-27 00:54:00.441780" }, 
+		{"input": "photocell",   "data": "897",   "id": 5,   "datetime": "2012-09-27 00:54:00.439565" }]
+		
+		CSV
+		6,2012-09-27 00:54:00.441780,temperature,28
+		5,2012-09-27 00:54:00.439565,photocell,897 
 
 Adding tool data stream
 --------------------
 
 		Examples:	http://localhost:8080/api/set?stream=my_sensor_stream
 		API url:	/api/set
-		Method:	POST
+		Method:		POST
 		Returns:	status
-Examples of usage:  http://localhost:8080/api/set?stream=my_sensor_stream  POST varibles with this request:  key            value -------------------------------- temperature    28 photocell      755 ...
+
+Examples of usage:
+
+		http://localhost:8080/api/set?stream=my_sensor_stream
+		
+		POST varibles with this request:
+		key            value
+		--------------------------------
+		temperature    28
+		photocell      755
+		...
+
+
