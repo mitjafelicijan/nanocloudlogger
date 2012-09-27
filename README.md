@@ -38,7 +38,7 @@ All you need to do to initialize stream is to give it an ID. Stream ID is alphan
 		home_automation
 
 
-Reading stream data
+Reading data stream
 -----------------
 
 		Example:	http://localhost:8080/api/get?stream=my_sensor_stream
