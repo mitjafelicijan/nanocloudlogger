@@ -1,7 +1,7 @@
 NanoCloudLogger
 ===============
 
-Simple cloud based logger for devices like Arduino.
+Simple cloud based logger for devices like microcontrollers.
 
 General information
 -----------------
